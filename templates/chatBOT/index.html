@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chat Bot</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel= "stylesheet" href= "{{ url_for('static',filename='css/index.css') }}">
+  </head>
+
+  <body>
+    <nav class="navbar bg-body-tertiary sticky-top shadow-lg">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img
+            src="{{ url_for('static', filename='logo-1.svg') }}"
+            alt="Logo"
+            width="50"
+            height="50"
+            class="d-inline-block align-text-center"
+          />
+          <img src="{{ url_for('static', filename='logo-2.svg') }}" alt="" />
+        </a>
+
+        <div class="profile ms-auto">
+          <a href="#" class="d-flex align-items-center">
+            <img
+            src="{{ url_for('static', filename='gambar1.png') }}"
+              alt="profile"
+              width="50"
+              class="rounded-circle img-thumbnail"
+            />
+          </a>
+        </div>
+        <span class="ms-2">
+          <h6 class="text-end mb-0" style="color: rgb(73, 69, 252)">
+            Kadek Dummy
+          </h6>
+          <i style="color: rgb(73, 69, 252)">Mahasiswa</i>
+        </span>
+      </div>
+    </nav>
+
+    <div class="banner">
+      <h1 class="title">Selamat Datang di AI Tasya</h1>
+      <h2 class="subtitle">
+        Tasya siap membantu untuk menjawab pertanyaan kamu tentang Universitas
+        Udayana
+      </h2>
+      <div class="button-container">
+        <button class="button">Fakultas MIPA</button>
+        <button class="button">Universitas Udayana</button>
+        <button class="button">Pembayaran UKT</button>
+      </div>
+    </div>
+
+    <div class="chat-container">
+      <div class="chat-messages">
+        <!-- Menampilkan pesan-pesan chat -->
+      </div>
+      <div class="chat-input">
+        <input type="text" placeholder="Ketik pesan..." />
+        <button type="button">Kirim</button>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/index.js') }}" ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
