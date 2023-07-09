@@ -1,0 +1,48 @@
+#list_user_group{
+    color: #8F95B2;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+    word-wrap: break-word;
+}
+#list_data_group{
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+    word-wrap: break-word;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+.searchbar{
+    color: #A0AEC0;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.20px;
+    word-wrap: break-word;
+    background-color:#FAFAFA ;
+    border-radius: 12px;
+    border: none;
+}
+.tambah{
+    background-color: #FAFAFA;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.20px;
+    word-wrap: break-word;
+    border-radius: 12px;
+    border: none;
+}
+.noborder{
+    border: none;
+    color: #718096;
+    background-color: transparent;
+}
