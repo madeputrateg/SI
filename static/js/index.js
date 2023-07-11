@@ -1,3 +1,5 @@
+const rooturl="http://127.0.0.1:5000/";
+
 document.addEventListener("DOMContentLoaded", function() {
   var chatInput = document.querySelector(".chat-input input");
   var chatMessages = document.querySelector(".chat-messages");
@@ -32,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       let chatbotMessageElement = document.createElement("p");
       chatbotMessageElement.classList.add("chatbot-message");
-      fetch("http://127.0.0.1:5000/chatbot", {
+      fetch(rooturl+"chatbot", {
       method: "POST",
       body: JSON.stringify({
           chat:`${message}`

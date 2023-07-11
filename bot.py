@@ -5,18 +5,22 @@ from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
 from chatterbot.trainers import ChatterBotCorpusTrainer
 import re
-from flask import Flask , request , render_template , jsonify , sessions , Blueprint
+from flask import Flask , request , render_template , jsonify 
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mysqldb import MySQL
 from flask_login import LoginManager,UserMixin,login_user,logout_user
 import uuid
 import mysql.connector
 import pickle
+from datetime import datetime
+from flask_cors import CORS
 
+now = datetime.now()
 app=Flask(__name__)
 
+CORS(app)
 # mydb = mysql.connector.connect(
-#   host="localhost",
+#   host="127.0.0.1",
 #   user="root",
 #   password="example",
 #   database="flask"
@@ -24,10 +28,12 @@ app=Flask(__name__)
 app.secret_key = 'your-secret-key'
 
 # MySQL Configuration
-app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_HOST'] = '127.0.0.1'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'example'
 app.config['MYSQL_DB'] = 'flask'
+
+
 
 mydb=MySQL(app)
 login_manager=LoginManager(app)
@@ -42,6 +48,24 @@ with app.app_context():
         newresult.append("\n")
     cursor.close()
 
+with app.app_context():
+    cursor =mydb.connection.cursor()
+    cursor.execute("SELECT count(*) FROM data")
+    result=cursor.fetchall()
+    newresult.append("what is the number of data train on?")
+    newresult.append("the number of data is "+str(result[0][0]))
+    newresult.append("\n")
+    cursor.close()
+
+with app.app_context():
+    cursor =mydb.connection.cursor()
+    cursor.execute("SELECT count(*) FROM data")
+    result=cursor.fetchall()
+    newresult.append("when is the data trained on?")
+    newresult.append("the time is "+now.strftime("%H:%M:%S"))
+    newresult.append("\n")
+    cursor.close()
+
 # s=open("dataset.txt","r")
 # isi=s.readlines()
 # for i in range(0,len(isi)-1):
@@ -49,7 +73,6 @@ with app.app_context():
 #         cursor.execute("INSERT INTO data(pertanyaan,jawaban) VALUES(\"{}\",\"{}\")".format(isi[i],isi[i+1]))
 # mydb.commit()
 # s.close()
-
 
 
 class User(UserMixin):
@@ -246,3 +269,45 @@ def listdata():
 @app.route('/admin/listuser',methods=['GET'])
 def listuser():
     return render_template('admin/listuser.html')
+
+@app.route('/admin/getdata',methods=["GET"])
+def getdata():
+    # data=request.json
+    args=request.args
+    message="succes"
+    array=[]
+    page=args.get("page")
+    result=args.get("result")
+    if page==None:
+        page=0
+    if result==None:
+        result=8000
+    try:
+        # auth = authAdmin(data["user_id"])
+        if True:
+            cur = mydb.connection.cursor()
+            sql="SELECT id,pertanyaan,jawaban FROM data LIMIT %s,%s"
+            val=(page,result)
+            cur.execute(sql,val)
+            query=cur.fetchall()
+            cur.close()
+            for i in query:
+                array.append({"id":i[0],"pertanyaan":i[1],"jawaban":i[2]})
+        else:
+            message="unauthorize"
+    except Exception as e:
+        message= "error : " + str(e)
+    return jsonify({"message":message,"data":array})
+
+@app.route('/admin/firstsize',methods=["GET"])
+def getsize():
+    message="success"
+    try:
+        cur = mydb.connection.cursor()
+        sql="SELECT count(id) FROM data"
+        cur.execute(sql)
+        query=cur.fetchall()
+        cur.close()
+    except Exception as e:
+        message= "error : " + str(e)
+    return jsonify({"message":message,"data":query[0][0]})
